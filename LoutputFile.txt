@@ -1,0 +1,36 @@
+So if I input a whole paragraph here. Including a number like 18, it'll count all these letters, numbers, and whatnot. It'll display them for you to analyze. Oh yeah, it'll also display the occurrence of each letter in the alphabet and its respective capital letters for you. Don't forget to run the code once you input the paragraph. Have fun!
+There are 268 letters.
+There are 2 numbers.
+There are 74 special characters.
+
+a: 24 
+b: 3 
+c: 10 
+d: 6 
+e: 32 
+f: 6 
+g: 4 
+h: 15 
+i: 13 
+k: 1 
+l: 20 
+m: 3 
+n: 17 
+o: 18 
+p: 11 
+r: 17 
+s: 9 
+t: 28 
+u: 12 
+v: 2 
+w: 2 
+y: 7 
+z: 1 
+D: 1 
+H: 1 
+I: 3 
+O: 1 
+S: 1 
+1: 1 
+8: 1 
+.: 5 
