@@ -1,2 +1,0 @@
-So if I input a whole paragraph here. Including a number like 18, it'll count all these letters, numbers, and whatnot. It'll display them for you to analyze. Oh yeah, it'll also display the occurrence of each letter in the alphabet and its respective capital letters for you. Don't forget to run the code once you input the paragraph. Have fun!
-
