@@ -4,7 +4,7 @@ import java.util.Scanner;
 import java.io.File;
 
 
-public class practice {
+public class bankAccount {
     public static void main(String[] args) throws IOException {
         Scanner inputFile = new Scanner(new File("accounts.txt"));
         String[] accountNumbers = new String[100];
