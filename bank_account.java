@@ -2,13 +2,14 @@ import java.io.IOException;
 import java.util.Objects;
 import java.util.Scanner;
 import java.io.File;
-
+import java.io.PrintStream;
 
 public class bankAccount {
     public static void main(String[] args) throws IOException {
         Scanner inputFile = new Scanner(new File("accounts.txt"));
         String[] accountNumbers = new String[100];
         double[] balances = new double[100];
+        final String fileName = "accounts.txt";
 
         int numAccounts = readData(accountNumbers, balances, inputFile);
 
@@ -43,6 +44,7 @@ public class bankAccount {
                 case 'a':
                     if (addAccount(accountNumbers, numAccounts)) {
                         numAccounts++;
+
                     }
                     break;
 
@@ -51,6 +53,7 @@ public class bankAccount {
             }
         } while (userInput != 'q');
 
+        printAccounts(accountNumbers, balances, numAccounts, fileName);
         inputFile.close();
     }
 
@@ -143,9 +146,15 @@ public class bankAccount {
         Scanner input = new Scanner(System.in);
         System.out.println("new account number (six digits): ");
         String newAccount = input.next();
+        int I = index(accountNumbers, newAccount, size);
 
+        if (I != -1) {
+            System.out.println("Sorry, that account number already exists.");
+            return false;
+        }
         if (size >= 100) {
             System.out.println("Sorry, the database is full.\n");
+            return false;
         }
 
         int digitCounter = 0;
@@ -155,10 +164,20 @@ public class bankAccount {
             digitCounter++;
         }
         if (digitCounter != 6) {
+            System.out.println("Sorry, account number must be exactly six digits.");
             return false;
         } else {
             accountNumbers[size] = newAccount;
         }
         return true;
+    }
+
+    public static void printAccounts(String[] accountNumbers, double[] balances, int size, String fileName) throws IOException {
+        PrintStream printer = new PrintStream(fileName);
+
+        for (int i = 0; i < size; i++) {
+            printer.println(accountNumbers[i] + " " + balances[i]);
+        }
+        printer.close();
     }
 }
