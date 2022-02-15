@@ -10,13 +10,13 @@ public class bankAccount {
         String[] accountNumbers = new String[100];
         double[] balances = new double[100];
         final String fileName = "accounts.txt";
+        Scanner input = new Scanner(System.in);
 
         int numAccounts = readData(accountNumbers, balances, inputFile);
 
         char userInput;
         do {
             printMenu();
-            Scanner input = new Scanner(System.in);
             userInput = input.next().charAt(0);
 
             switch (userInput) {
@@ -28,23 +28,20 @@ public class bankAccount {
                     break;
 
                 case 'b':
-                    getBalance(accountNumbers, balances, numAccounts);
+                    getBalance(accountNumbers, balances, numAccounts, input);
                     break;
 
                 case 'd':
-                    deposit(accountNumbers, balances, numAccounts);
-                    System.out.println("Deposit successful.\n");
+                    deposit(accountNumbers, balances, numAccounts, input);
                     break;
 
                 case 'w':
-                    withdraw(accountNumbers, balances, numAccounts);
-                    System.out.println("Withdrawal successful.\n");
+                    withdraw(accountNumbers, balances, numAccounts, input);
                     break;
 
                 case 'a':
-                    if (addAccount(accountNumbers, numAccounts)) {
+                    if (addAccount(accountNumbers, numAccounts, input)) {
                         numAccounts++;
-
                     }
                     break;
 
@@ -70,14 +67,14 @@ public class bankAccount {
     }
 
     public static void printMenu() {
-        System.out.println("Choices: ");
+        System.out.println("\nChoices:");
         System.out.println("b: get balance");
         System.out.println("d: make deposit");
         System.out.println("w: make withdrawal");
         System.out.println("a: add account");
         System.out.println("p: print accounts to screen");
         System.out.println("q: quit");
-        System.out.println("Enter a letter choice: ");
+        System.out.print("Enter a letter choice: ");
     }
 
     public static void printAccounts(String[] str, double[] balances, int size) {
@@ -95,8 +92,7 @@ public class bankAccount {
         return -1;
     }
 
-    public static void getBalance(String[] accountNumbers, double[] balances, int size) {
-        Scanner input = new Scanner(System.in);
+    public static void getBalance(String[] accountNumbers, double[] balances, int size, Scanner input) {
         System.out.println("account number: ");
         String account = input.next();
 
@@ -109,8 +105,7 @@ public class bankAccount {
         }
     }
 
-    public static double deposit(String[] accountNumbers, double[] balances, int size) {
-        Scanner input = new Scanner(System.in);
+    public static void deposit(String[] accountNumbers, double[] balances, int size, Scanner input) {
         System.out.println("account number: ");
         String account = input.next();
         int i = index(accountNumbers, account, size);
@@ -121,12 +116,11 @@ public class bankAccount {
             System.out.println("amount to deposit: ");
             double depositAmount = input.nextDouble();
             balances[i] += depositAmount;
+            System.out.println("Deposit successful.\n");
         }
-        return balances[i];
     }
 
-    public static double withdraw(String[] accountNumbers, double[] balances, int size) {
-        Scanner input = new Scanner(System.in);
+    public static void withdraw(String[] accountNumbers, double[] balances, int size, Scanner input) {
         System.out.println("account number: ");
         String account = input.next();
 
@@ -138,22 +132,22 @@ public class bankAccount {
             System.out.println("amount to withdraw: ");
             double withdrawalAmount = input.nextDouble();
             balances[i] -= withdrawalAmount;
+            System.out.println("Withdrawal successful.\n");
         }
-        return balances[i];
     }
 
-    public static boolean addAccount(String[] accountNumbers, int size) {
-        Scanner input = new Scanner(System.in);
+    public static boolean addAccount(String[] accountNumbers, int size, Scanner input) {
+        if (size >= 100) {
+            System.out.println("Sorry, the database is full.\n");
+            return false;
+        }
+
         System.out.println("new account number (six digits): ");
         String newAccount = input.next();
         int I = index(accountNumbers, newAccount, size);
 
         if (I != -1) {
             System.out.println("Sorry, that account number already exists.");
-            return false;
-        }
-        if (size >= 100) {
-            System.out.println("Sorry, the database is full.\n");
             return false;
         }
 
@@ -164,10 +158,11 @@ public class bankAccount {
             digitCounter++;
         }
         if (digitCounter != 6) {
-            System.out.println("Sorry, account number must be exactly six digits.");
+            System.out.println("Sorry, account number must be exactly six digits");
             return false;
         } else {
             accountNumbers[size] = newAccount;
+            System.out.println("Account added.");
         }
         return true;
     }
@@ -176,7 +171,7 @@ public class bankAccount {
         PrintStream printer = new PrintStream(fileName);
 
         for (int i = 0; i < size; i++) {
-            printer.println(accountNumbers[i] + " " + balances[i]);
+            printer.printf("%s %5.2f\n", accountNumbers[i], balances[i]);
         }
         printer.close();
     }
